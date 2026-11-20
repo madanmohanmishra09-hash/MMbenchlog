@@ -1,0 +1,16 @@
+{
+  "name": "Work plan",
+  "short_name": "Work plan",
+  "description": "A numbered outline for lab research: objectives, work items and sub-steps, each with a status.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#E7EBE8",
+  "theme_color": "#1F5F4F",
+  "icons": [
+    { "src": "./icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "./icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "./icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

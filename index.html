@@ -1,0 +1,1436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Work plan</title>
+<meta name="description" content="A numbered outline for lab research: objectives, work items and sub-steps, each with a status.">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" href="./icons/icon-192.png">
+<link rel="apple-touch-icon" href="./icons/icon-192.png">
+<meta name="theme-color" content="#E7EBE8" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#101614" media="(prefers-color-scheme: dark)">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@500;600;700&family=Public+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    color-scheme: light;
+    --paper: #E7EBE8;
+    --sheet: #FAFBFA;
+    --sheet-2: #F2F5F2;
+    --ink: #14211D;
+    --ink-2: #4E605A;
+    --ink-3: #7E8D87;
+    --rule: #CFD8D3;
+    --rule-strong: #AEBAB4;
+    --accent: #1F5F4F;
+    --accent-ink: #FFFFFF;
+    --s-ongoing: #96621A;
+    --s-repeat: #6B4AA8;
+    --s-upcoming: #33454E;
+    --s-completed: #1C7A54;
+    --s-failed: #AE3828;
+    --lift: 0 2px 10px rgba(20, 33, 29, .13);
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      color-scheme: dark;
+      --paper: #101614; --sheet: #171E1C; --sheet-2: #1C2523;
+      --ink: #E7EEEA; --ink-2: #A3B2AC; --ink-3: #7B8A84;
+      --rule: #2A3532; --rule-strong: #3C4A46;
+      --accent: #58B795; --accent-ink: #0B120F;
+      --s-ongoing: #E8A64B; --s-repeat: #A186E0; --s-upcoming: #C3D0CB;
+      --s-completed: #4FB08C; --s-failed: #E06A54;
+      --lift: 0 2px 12px rgba(0, 0, 0, .45);
+    }
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --paper: #101614; --sheet: #171E1C; --sheet-2: #1C2523;
+    --ink: #E7EEEA; --ink-2: #A3B2AC; --ink-3: #7B8A84;
+    --rule: #2A3532; --rule-strong: #3C4A46;
+    --accent: #58B795; --accent-ink: #0B120F;
+    --s-ongoing: #E8A64B; --s-repeat: #A186E0; --s-upcoming: #C3D0CB;
+    --s-completed: #4FB08C; --s-failed: #E06A54;
+    --lift: 0 2px 12px rgba(0, 0, 0, .45);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-padding-top: calc(env(safe-area-inset-top, 0px) + 56px); height: 100%; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: "Public Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    font-size: 16px; line-height: 1.5;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::before {
+    content: ""; position: fixed; inset: 0 0 auto;
+    height: env(safe-area-inset-top, 0px);
+    background: var(--paper); z-index: 40;
+  }
+
+  .wrap { max-width: 980px; margin: 0 auto; padding: 18px 18px 110px; }
+
+  button { font: inherit; cursor: pointer; border-radius: 2px; }
+
+  .btn { border: 1px solid var(--rule-strong); background: var(--sheet); color: var(--ink); padding: 7px 13px; font-weight: 500; font-size: .9rem; }
+  .btn:hover { border-color: var(--ink-3); }
+  .btn-primary { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); font-weight: 600; }
+  .btn-primary:hover { filter: brightness(1.07); }
+  .btn-sm { padding: 4px 9px; font-size: .82rem; }
+  .btn-quiet { border: none; background: none; color: var(--ink-3); padding: 3px 5px; font-size: .82rem; text-decoration: underline; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+  .btn-quiet:hover { color: var(--ink); }
+  .btn-quiet.danger:hover { color: var(--s-failed); }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+
+  /* ---- project tabs ---- */
+  .projects { display: flex; gap: 2px; flex-wrap: wrap; align-items: center; border-bottom: 1px solid var(--rule); padding-bottom: 7px; margin-bottom: 14px; }
+  .ptab { border: 1px solid transparent; border-bottom: none; background: none; padding: 6px 12px; color: var(--ink-2); font-size: .89rem; font-weight: 500; max-width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .ptab:hover { color: var(--ink); }
+  .ptab[aria-pressed="true"] { background: var(--sheet); border-color: var(--rule); color: var(--ink); font-weight: 600; box-shadow: inset 0 3px 0 var(--accent); }
+
+  /* ---- masthead ---- */
+  .masthead { display: flex; justify-content: space-between; align-items: flex-start; gap: 18px; flex-wrap: wrap; }
+  h1 { font-family: "Archivo Narrow", "Public Sans", sans-serif; font-weight: 700; font-size: clamp(1.65rem, 4.2vw, 2.4rem); line-height: 1.05; letter-spacing: -.01em; margin: 0; max-width: 26ch; overflow-wrap: anywhere; }
+  .sub { margin: 7px 0 0; color: var(--ink-2); font-size: .93rem; max-width: 62ch; }
+  .head-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+  .meter { margin: 16px 0 2px; }
+  .meter-bar { display: flex; width: 100%; height: 10px; border: 1px solid var(--rule-strong); background: var(--sheet-2); overflow: hidden; }
+  .meter-seg { border: none; padding: 0; height: 100%; min-width: 3px; border-right: 1px solid var(--paper); transition: flex-basis .35s ease; }
+  .meter-seg:last-child { border-right: none; }
+  .meter-seg[aria-pressed="true"] { box-shadow: inset 0 0 0 2px var(--ink); }
+  .legend { display: flex; flex-wrap: wrap; gap: 3px 16px; margin-top: 8px; }
+  .legend-item { border: none; background: none; padding: 2px 0; display: flex; align-items: baseline; gap: 6px; color: var(--ink-2); font-size: .84rem; }
+  .legend-item:hover { color: var(--ink); }
+  .legend-item[aria-pressed="true"] { color: var(--ink); font-weight: 600; }
+  .dot { width: 8px; height: 8px; flex: 0 0 auto; border-radius: 50%; transform: translateY(-1px); }
+  .legend-n { color: var(--ink-3); font-variant-numeric: tabular-nums; }
+
+  /* ---- sticky toolbar ---- */
+  .toolbar {
+    position: sticky; top: env(safe-area-inset-top, 0px); z-index: 12;
+    display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
+    padding: 12px 0 10px; margin-top: 10px;
+    background: var(--paper); border-bottom: 1px solid var(--rule);
+  }
+  .search { flex: 1 1 190px; min-width: 0; padding: 8px 11px; font: inherit; font-size: .91rem; color: var(--ink); background: var(--sheet); border: 1px solid var(--rule-strong); border-radius: 2px; }
+  .search::placeholder { color: var(--ink-3); }
+
+  /* ---- objective card ---- */
+  .objective { background: var(--sheet); border: 1px solid var(--rule); border-left: 5px solid var(--rule-strong); margin: 14px 0; }
+  .obj-head { display: flex; gap: 9px; align-items: flex-start; padding: 13px 14px 11px; }
+  .twist { border: none; background: none; color: var(--ink-3); padding: 2px 3px 0; font-size: .72rem; line-height: 1.6; }
+  .twist:hover { color: var(--ink); }
+  .twist.ghost { visibility: hidden; }
+  .obj-main { flex: 1 1 auto; min-width: 0; }
+  .obj-label { font-family: "Archivo Narrow", "Public Sans", sans-serif; font-size: 1.3rem; font-weight: 700; color: var(--accent); }
+  .obj-title { font-family: "Archivo Narrow", "Public Sans", sans-serif; font-weight: 600; font-size: 1.3rem; line-height: 1.2; margin: 0; overflow-wrap: anywhere; }
+  .obj-note { margin: 5px 0 0; color: var(--ink-2); font-size: .9rem; max-width: 70ch; }
+  .obj-meta { margin-top: 7px; display: flex; align-items: center; gap: 9px; color: var(--ink-3); font-size: .8rem; font-variant-numeric: tabular-nums; }
+  .mini { width: 92px; height: 4px; background: var(--rule); overflow: hidden; }
+  .mini > span { display: block; height: 100%; background: var(--s-completed); }
+  .obj-side { flex: 0 0 auto; display: flex; gap: 2px; align-items: center; }
+
+  /* ---- tree ---- */
+  .tree { list-style: none; margin: 0; padding: 0; }
+  .tree .tree { margin-left: 15px; border-left: 1px solid var(--rule); padding-left: 0; }
+  .node { position: relative; }
+  .depth-1 > .row { border-top: 1px solid var(--rule); }
+  .objective > .tree > .node:first-child > .row { border-top: 1px solid var(--rule); }
+
+  .row { display: flex; gap: 9px; align-items: flex-start; padding: 7px 12px 7px 10px; }
+  .row:hover { background: var(--sheet-2); }
+  .num { flex: 0 0 auto; min-width: 2.3em; font-variant-numeric: tabular-nums; font-weight: 700; font-size: .88rem; padding-top: 2px; }
+  .depth-1 .num { min-width: 2.6em; font-size: .92rem; }
+  .row-main { flex: 1 1 auto; min-width: 0; }
+  .row-title { font-size: .95rem; font-weight: 400; line-height: 1.45; overflow-wrap: anywhere; cursor: text; }
+  .depth-1 > .row .row-title { font-size: .99rem; font-weight: 500; }
+  .has-kids > .row .row-title { font-weight: 600; }
+  .row-note { margin: 3px 0 0; color: var(--ink-2); font-size: .86rem; white-space: pre-wrap; max-width: 70ch; overflow-wrap: anywhere; }
+  .row-meta { margin-top: 3px; color: var(--ink-3); font-size: .78rem; display: flex; gap: 12px; flex-wrap: wrap; }
+  .row-side { flex: 0 0 auto; display: flex; gap: 4px; align-items: center; }
+
+  .status-select { font: inherit; font-size: .76rem; font-weight: 600; padding: 2px 5px; border-radius: 2px; background: var(--sheet); border: 1px solid currentColor; cursor: pointer; max-width: 112px; }
+  .status-select:disabled { cursor: default; }
+
+  .icon-btn { border: 1px solid transparent; background: none; color: var(--ink-3); min-width: 24px; height: 22px; line-height: 1; padding: 0 4px; font-size: .78rem; }
+  .icon-btn:hover { color: var(--ink); border-color: var(--rule-strong); }
+  .icon-btn[disabled] { opacity: .25; cursor: default; }
+
+  @media (hover: hover) {
+    .row .quick { opacity: 0; transition: opacity .12s ease; }
+    .row:hover .quick, .row:focus-within .quick { opacity: 1; }
+  }
+
+  /* ---- inline input ---- */
+  .inline-wrap { display: flex; gap: 8px; align-items: center; padding: 5px 12px 7px 10px; }
+  .inline-num { color: var(--ink-3); font-weight: 700; font-size: .86rem; min-width: 2.3em; }
+  .inline-input { flex: 1 1 auto; min-width: 0; font: inherit; font-size: .94rem; padding: 6px 9px; color: var(--ink); background: var(--paper); border: 1px solid var(--accent); border-radius: 2px; }
+  .inline-hint { color: var(--ink-3); font-size: .76rem; white-space: nowrap; }
+
+  .add-line { padding: 7px 12px 11px; display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+
+  /* ---- menu ---- */
+  .menu { position: absolute; z-index: 30; background: var(--sheet); border: 1px solid var(--rule-strong); box-shadow: var(--lift); min-width: 184px; padding: 4px; }
+  .menu[hidden] { display: none; }
+  .menu button { display: flex; width: 100%; justify-content: space-between; gap: 14px; align-items: center; border: none; background: none; text-align: left; padding: 7px 9px; font-size: .88rem; color: var(--ink); }
+  .menu button:hover { background: var(--sheet-2); }
+  .menu button[disabled] { color: var(--ink-3); cursor: default; background: none; }
+  .menu .danger { color: var(--s-failed); }
+  .menu hr { border: none; border-top: 1px solid var(--rule); margin: 4px 0; }
+  .menu .key { color: var(--ink-3); font-size: .76rem; }
+
+  .empty { border: 1px dashed var(--rule-strong); background: var(--sheet); padding: 26px 20px; max-width: 58ch; }
+  .empty h2 { font-family: "Archivo Narrow", "Public Sans", sans-serif; font-weight: 600; font-size: 1.4rem; margin: 0 0 8px; }
+  .empty p { margin: 0 0 14px; color: var(--ink-2); }
+  .notice { border-left: 4px solid var(--s-ongoing); background: var(--sheet); padding: 9px 13px; margin: 12px 0; font-size: .89rem; color: var(--ink-2); }
+
+  /* ---- modal ---- */
+  .overlay { position: fixed; inset: 0; background: rgba(12,20,18,.5); display: flex; align-items: flex-start; justify-content: center; padding: calc(env(safe-area-inset-top, 0px) + 22px) 14px calc(env(safe-area-inset-bottom, 0px) + 22px); overflow-y: auto; z-index: 50; }
+  .overlay[hidden] { display: none; }
+  .panel { background: var(--sheet); border: 1px solid var(--rule-strong); border-top: 5px solid var(--accent); width: min(580px, 100%); padding: 18px; }
+  .panel h2 { font-family: "Archivo Narrow", "Public Sans", sans-serif; font-weight: 600; font-size: 1.4rem; margin: 0 0 12px; }
+  .panel-hint { margin: -6px 0 14px; color: var(--ink-2); font-size: .87rem; }
+  .field { margin-bottom: 12px; }
+  .field label { display: block; font-size: .84rem; font-weight: 600; margin-bottom: 4px; color: var(--ink-2); }
+  .field input, .field select, .field textarea { width: 100%; font: inherit; font-size: .94rem; padding: 8px 10px; color: var(--ink); background: var(--paper); border: 1px solid var(--rule-strong); border-radius: 2px; }
+  .field textarea { min-height: 80px; resize: vertical; line-height: 1.45; }
+  .field-row { display: flex; gap: 10px; flex-wrap: wrap; }
+  .field-row .field { flex: 1 1 140px; }
+  .panel-actions { display: flex; justify-content: flex-end; gap: 8px; margin-top: 16px; flex-wrap: wrap; }
+  .form-error { color: var(--s-failed); font-size: .86rem; margin: 0 0 9px; }
+  .form-error[hidden] { display: none; }
+
+  .foot { margin-top: 24px; padding-top: 12px; border-top: 1px solid var(--rule); color: var(--ink-3); font-size: .82rem; display: flex; gap: 14px; flex-wrap: wrap; }
+
+  @media (max-width: 620px) {
+    .wrap { padding: 14px 10px 90px; }
+    .tree .tree { margin-left: 10px; }
+    .row { flex-wrap: wrap; padding-right: 8px; }
+    .row-side { width: 100%; justify-content: flex-end; }
+    .row .quick { opacity: 1; }
+  }
+  @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="projects" id="projects"></div>
+
+  <header class="masthead">
+    <div>
+      <h1 id="projTitle">Work plan</h1>
+      <p class="sub" id="projSub"></p>
+    </div>
+    <div class="head-actions">
+      <button class="btn" id="editProject">Edit project</button>
+      <button class="btn btn-primary" id="addObjective">Add objective</button>
+    </div>
+  </header>
+
+  <section class="meter" aria-label="Work by status">
+    <div class="meter-bar" id="meter"></div>
+    <div class="legend" id="legend"></div>
+  </section>
+
+  <div class="toolbar">
+    <input class="search" id="search" type="search" placeholder="Search the plan" aria-label="Search">
+    <button class="btn btn-sm" id="expandAll">Expand all</button>
+    <button class="btn btn-sm" id="collapseAll">Collapse all</button>
+    <button class="btn btn-sm" id="exportBtn">Export CSV</button>
+    <button class="btn btn-sm" id="exportJson">Back up</button>
+    <button class="btn btn-sm" id="importBtn">Restore</button>
+    <input type="file" id="importFile" accept="application/json,.json" hidden>
+  </div>
+
+  <div id="notices"></div>
+  <main id="board" aria-live="polite"></main>
+
+  <div class="foot"><span id="footCount"></span><span id="footSaved">Saved as you go.</span></div>
+</div>
+
+<div class="menu" id="menu" hidden role="menu"></div>
+
+<div class="overlay" id="overlay" hidden>
+  <div class="panel" role="dialog" aria-modal="true" aria-labelledby="panelTitle" id="panel"></div>
+</div>
+
+<script src="./starter-plan.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  var STATUSES = [
+    { id: "ongoing",   label: "Ongoing",   color: "--s-ongoing",   noteLabel: "Where it stands",      dateLabel: "Started" },
+    { id: "repeat",    label: "Repeat",    color: "--s-repeat",    noteLabel: "What you’re changing", dateLabel: "Repeating from" },
+    { id: "upcoming",  label: "Upcoming",  color: "--s-upcoming",  noteLabel: "What you need first",  dateLabel: "Planned for" },
+    { id: "completed", label: "Completed", color: "--s-completed", noteLabel: "Result",               dateLabel: "Finished" },
+    { id: "failed",    label: "Failed",    color: "--s-failed",    noteLabel: "What went wrong",      dateLabel: "Attempted" }
+  ];
+  var BY_ID = {};
+  STATUSES.forEach(function (s, i) { s.order = i; BY_ID[s.id] = s; });
+  var LETTERS = "abcdefghijklmnopqrstuvwxyz";
+  var ROMAN = ["i","ii","iii","iv","v","vi","vii","viii","ix","x","xi","xii","xiii","xiv","xv","xvi","xvii","xviii","xix","xx"];
+  var MAX_DEPTH = 6;
+
+  var state = {
+    db: null, downloads: null,
+    projects: null, nodes: null,
+    projectId: null, filter: "all", query: "",
+    canWrite: true, stale: false, gone: false,
+    collapsed: {}, inline: null, draft: ""
+  };
+
+  try {
+    state.collapsed = JSON.parse(localStorage.getItem("wp2.collapsed") || "{}") || {};
+    state.projectId = localStorage.getItem("wp2.project") || null;
+  } catch (e) { state.collapsed = {}; }
+
+  function remember() {
+    try {
+      localStorage.setItem("wp2.collapsed", JSON.stringify(state.collapsed));
+      if (state.projectId) localStorage.setItem("wp2.project", state.projectId);
+    } catch (e) {}
+  }
+
+  var el = {};
+  ["projects","projTitle","projSub","meter","legend","search","overlay","panel","notices","board",
+   "footCount","footSaved","exportBtn","addObjective","editProject","menu","expandAll","collapseAll",
+   "exportJson","importBtn","importFile"]
+    .forEach(function (k) { el[k] = document.getElementById(k); });
+
+  /* ---------- helpers ---------- */
+
+  function make(tag, cls, text) {
+    var n = document.createElement(tag);
+    if (cls) n.className = cls;
+    if (text != null) n.textContent = text;
+    return n;
+  }
+
+  function byPos(a, b) {
+    var d = (a.pos == null ? 1e9 : a.pos) - (b.pos == null ? 1e9 : b.pos);
+    if (d) return d;
+    return String(a.createdAt || "").localeCompare(String(b.createdAt || ""));
+  }
+
+  function fmtDate(iso) {
+    if (!iso) return "";
+    var p = String(iso).split("-");
+    if (p.length !== 3) return iso;
+    var d = new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2]));
+    if (isNaN(d.getTime())) return iso;
+    var m = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    return d.getDate() + " " + m[d.getMonth()] + " " + d.getFullYear();
+  }
+
+  function ready() { return state.projects !== null && state.nodes !== null; }
+
+  function project() {
+    var ps = state.projects || [], found = null;
+    ps.forEach(function (p) { if (p.id === state.projectId) found = p; });
+    if (!found && ps.length) found = ps.slice().sort(byPos)[0];
+    return found;
+  }
+
+  function nodeById(id) {
+    var f = null;
+    (state.nodes || []).forEach(function (n) { if (n.id === id) f = n; });
+    return f;
+  }
+
+  function childrenOf(parentId, projectId) {
+    return (state.nodes || []).filter(function (n) {
+      if (parentId == null) return !n.parentId && n.projectId === projectId;
+      return n.parentId === parentId;
+    }).sort(byPos);
+  }
+
+  function siblingsOf(node) {
+    return childrenOf(node.parentId || null, node.projectId);
+  }
+
+  function descendants(id, acc) {
+    acc = acc || [];
+    childrenOf(id).forEach(function (c) { acc.push(c); descendants(c.id, acc); });
+    return acc;
+  }
+
+  function projectNodes(pid) {
+    return (state.nodes || []).filter(function (n) { return n.projectId === pid; });
+  }
+
+  function depthOf(node) {
+    var d = 0, cur = node;
+    while (cur && cur.parentId) { cur = nodeById(cur.parentId); d += 1; if (d > 20) break; }
+    return d;
+  }
+
+  function labelFor(depth, index, parentLabel) {
+    if (depth === 0) return String(index + 1);
+    if (depth === 1) return parentLabel + "." + (index + 1);
+    if (depth === 2) return (LETTERS[index] || "·") + ".";
+    if (depth === 3) return (ROMAN[index] || "·") + ".";
+    if (depth === 4) return "(" + (index + 1) + ")";
+    return "–";
+  }
+
+  function nextPos(list) {
+    var max = 0;
+    list.forEach(function (x) { if (typeof x.pos === "number" && x.pos > max) max = x.pos; });
+    return max + 1;
+  }
+
+  function hit(text) {
+    var q = state.query.trim().toLowerCase();
+    if (!q) return true;
+    return String(text || "").toLowerCase().indexOf(q) !== -1;
+  }
+
+  function nodeMatches(n) {
+    var statusOk = state.filter === "all" || n.status === state.filter;
+    var textOk = hit(n.title) || hit(n.note);
+    return statusOk && textOk;
+  }
+
+  function subtreeMatches(n) {
+    if (nodeMatches(n)) return true;
+    return childrenOf(n.id).some(subtreeMatches);
+  }
+
+  function filtering() { return state.filter !== "all" || state.query.trim() !== ""; }
+
+  /* ---------- render ---------- */
+
+  function render() {
+    renderProjects();
+    renderHeader();
+    renderMeter();
+    renderNotices();
+    renderBoard();
+    renderFoot();
+    el.exportBtn.hidden = !(ready() && project() && projectNodes(project().id).length);
+    el.editProject.hidden = !project() || !state.canWrite;
+    el.addObjective.hidden = !project() || !state.canWrite;
+    restoreInline();
+  }
+
+  function renderProjects() {
+    el.projects.innerHTML = "";
+    if (!ready()) return;
+    var ps = (state.projects || []).slice().sort(byPos), cur = project();
+    ps.forEach(function (p) {
+      var b = make("button", "ptab", p.title);
+      b.setAttribute("aria-pressed", cur && p.id === cur.id ? "true" : "false");
+      b.title = p.title;
+      b.addEventListener("click", function () { state.projectId = p.id; remember(); render(); });
+      el.projects.appendChild(b);
+    });
+    if (state.canWrite) {
+      var add = make("button", "ptab", ps.length ? "+ Project" : "+ New project");
+      add.addEventListener("click", function () { openProjectForm(null); });
+      el.projects.appendChild(add);
+    }
+  }
+
+  function renderHeader() {
+    var p = project();
+    el.projTitle.textContent = p ? p.title : (ready() ? "No project yet" : "Work plan");
+    el.projSub.textContent = p && p.note ? p.note : "";
+    el.projSub.hidden = !(p && p.note);
+  }
+
+  function countable() {
+    var p = project();
+    if (!p) return [];
+    return projectNodes(p.id).filter(function (n) { return n.parentId; });
+  }
+
+  function renderMeter() {
+    var items = countable(), c = {}, total = items.length;
+    STATUSES.forEach(function (s) { c[s.id] = 0; });
+    items.forEach(function (i) { if (c[i.status] != null) c[i.status] += 1; });
+
+    el.meter.innerHTML = "";
+    el.legend.innerHTML = "";
+
+    STATUSES.forEach(function (s) {
+      if (!c[s.id]) return;
+      var seg = make("button", "meter-seg");
+      seg.style.flex = "1 1 " + ((c[s.id] / total) * 100) + "%";
+      seg.style.background = "var(" + s.color + ")";
+      seg.setAttribute("aria-pressed", state.filter === s.id ? "true" : "false");
+      seg.setAttribute("aria-label", c[s.id] + " " + s.label.toLowerCase());
+      seg.title = c[s.id] + " " + s.label.toLowerCase();
+      seg.addEventListener("click", function () { setFilter(s.id); });
+      el.meter.appendChild(seg);
+    });
+
+    var all = make("button", "legend-item");
+    all.setAttribute("aria-pressed", state.filter === "all" ? "true" : "false");
+    all.appendChild(make("span", "", "Everything"));
+    all.appendChild(make("span", "legend-n", String(total)));
+    all.addEventListener("click", function () { setFilter("all"); });
+    el.legend.appendChild(all);
+
+    STATUSES.forEach(function (s) {
+      var b = make("button", "legend-item");
+      b.setAttribute("aria-pressed", state.filter === s.id ? "true" : "false");
+      var d = make("span", "dot"); d.style.background = "var(" + s.color + ")";
+      b.appendChild(d);
+      b.appendChild(make("span", "", s.label));
+      b.appendChild(make("span", "legend-n", String(c[s.id])));
+      b.addEventListener("click", function () { setFilter(s.id); });
+      el.legend.appendChild(b);
+    });
+  }
+
+  function setFilter(id) { state.filter = state.filter === id ? "all" : id; render(); }
+
+  function renderNotices() {
+    el.notices.innerHTML = "";
+    if (state.gone) {
+      el.notices.appendChild(make("div", "notice", "This plan can’t be saved in this view. Open the artifact from your own Claude account to use it."));
+      return;
+    }
+    if (state.stale && !ready()) {
+      el.notices.appendChild(make("div", "notice", "Your saved plan can’t be reached yet. It will appear once the connection comes back — nothing has been lost."));
+    } else if (state.stale) {
+      el.notices.appendChild(make("div", "notice", "Showing a saved copy; it may be out of date."));
+    }
+    if (!state.canWrite) el.notices.appendChild(make("div", "notice", "You can read this plan but not change it."));
+  }
+
+  function renderFoot() {
+    if (!ready()) { el.footCount.textContent = "Loading…"; return; }
+    var items = countable();
+    var done = items.filter(function (x) { return x.status === "completed"; }).length;
+    var pct = items.length ? Math.round((done / items.length) * 100) : 0;
+    el.footCount.textContent = items.length + " lines · " + done + " completed (" + pct + "%)";
+  }
+
+  function renderBoard() {
+    el.board.innerHTML = "";
+    if (!ready()) { el.board.appendChild(make("p", "obj-note", "Loading your plan…")); return; }
+
+    var p = project();
+    if (!p) {
+      var e0 = make("div", "empty");
+      e0.appendChild(make("h2", "", "Start with a project"));
+      e0.appendChild(make("p", "", "A project is the funded piece of work. Objectives sit under it, and every line below can carry its own sub-lines, as deep as you need."));
+      var b0 = make("button", "btn btn-primary", "Add project");
+      b0.addEventListener("click", function () { openProjectForm(null); });
+      e0.appendChild(b0);
+      el.board.appendChild(e0);
+      return;
+    }
+
+    var objs = childrenOf(null, p.id);
+    if (!objs.length) {
+      var e1 = make("div", "empty");
+      e1.appendChild(make("h2", "", "Add your first objective"));
+      e1.appendChild(make("p", "", "Work items under it are numbered 1.1, 1.2; their sub-lines get a, b, c; below that i, ii, iii. Everything renumbers itself when you reorder."));
+      var b1 = make("button", "btn btn-primary", "Add objective");
+      b1.addEventListener("click", function () { openObjectiveForm(null); });
+      e1.appendChild(b1);
+      el.board.appendChild(e1);
+      return;
+    }
+
+    var any = false;
+    objs.forEach(function (o, i) {
+      if (filtering() && !subtreeMatches(o) && !hit(o.title)) return;
+      el.board.appendChild(objectiveCard(o, i, objs.length));
+      any = true;
+    });
+
+    if (!any) {
+      var e2 = make("div", "empty");
+      e2.appendChild(make("h2", "", "Nothing matches"));
+      e2.appendChild(make("p", "", "No line in this project matches the filter or the search."));
+      var c = make("button", "btn", "Show everything");
+      c.addEventListener("click", function () { state.query = ""; el.search.value = ""; state.filter = "all"; render(); });
+      e2.appendChild(c);
+      el.board.appendChild(e2);
+    }
+  }
+
+  function objectiveCard(o, index, total) {
+    var card = make("section", "objective");
+    var kids = descendants(o.id);
+    var dom = null;
+    STATUSES.forEach(function (s) {
+      if (dom) return;
+      if (kids.some(function (k) { return k.status === s.id; })) dom = s;
+    });
+    if (dom) card.style.borderLeftColor = "var(" + dom.color + ")";
+
+    var collapsed = !!state.collapsed[o.id] && !filtering();
+
+    var head = make("div", "obj-head");
+    var tw = make("button", "twist", collapsed ? "▶" : "▼");
+    tw.setAttribute("aria-expanded", collapsed ? "false" : "true");
+    tw.setAttribute("aria-label", (collapsed ? "Expand" : "Collapse") + " objective " + (index + 1));
+    tw.addEventListener("click", function () { state.collapsed[o.id] = !state.collapsed[o.id]; remember(); render(); });
+    head.appendChild(tw);
+
+    var main = make("div", "obj-main");
+    var h = make("h2", "obj-title");
+    h.appendChild(make("span", "obj-label", "Objective " + (index + 1) + " "));
+    var t = make("span", "", o.title);
+    t.className = "obj-text";
+    t.title = "Click to rename";
+    t.style.cursor = "text";
+    t.addEventListener("click", function () { startInline("rename", o.id); });
+    h.appendChild(t);
+    main.appendChild(h);
+    if (o.note) main.appendChild(make("p", "obj-note", o.note));
+
+    var done = kids.filter(function (k) { return k.status === "completed"; }).length;
+    var meta = make("div", "obj-meta");
+    if (kids.length) {
+      var bar = make("span", "mini");
+      var fill = make("span");
+      fill.style.width = Math.round((done / kids.length) * 100) + "%";
+      bar.appendChild(fill);
+      meta.appendChild(bar);
+      meta.appendChild(make("span", "", done + " of " + kids.length + " done"));
+    } else {
+      meta.appendChild(make("span", "", "nothing under it yet"));
+    }
+    main.appendChild(meta);
+    head.appendChild(main);
+
+    if (state.canWrite) {
+      var side = make("div", "obj-side");
+      side.appendChild(iconBtn("＋", "Add work item", function () { expand(o.id); startInline("child", o.id); }));
+      side.appendChild(iconBtn("▲", "Move up", function () { move(o, -1); }, index === 0));
+      side.appendChild(iconBtn("▼", "Move down", function () { move(o, 1); }, index === total - 1));
+      side.appendChild(iconBtn("⋯", "More", function (ev) { openMenu(ev.currentTarget, o, index, total, 0); }));
+      head.appendChild(side);
+    }
+    card.appendChild(head);
+
+    if (!collapsed) {
+      var list = subtree(o, 1, String(index + 1));
+      if (list) card.appendChild(list);
+      if (state.inline && state.inline.kind === "child" && state.inline.id === o.id) {
+        card.appendChild(inlineRow(o.id, 1, String(index + 1) + "." + (childrenOf(o.id).length + 1)));
+      }
+      if (state.canWrite) {
+        var line = make("div", "add-line");
+        var a = make("button", "btn btn-sm", "Add work item");
+        a.addEventListener("click", function () { expand(o.id); startInline("child", o.id); });
+        line.appendChild(a);
+        var bulk = make("button", "btn-quiet", "Paste a numbered list");
+        bulk.addEventListener("click", function () { openBulkForm(o.id); });
+        line.appendChild(bulk);
+        card.appendChild(line);
+      }
+    }
+    return card;
+  }
+
+  function subtree(parent, depth, parentLabel) {
+    var kids = childrenOf(parent.id);
+    if (!kids.length) return null;
+    var visible = filtering() ? kids.filter(function (k) { return subtreeMatches(k); }) : kids;
+    if (!visible.length) return null;
+
+    var ul = make("ul", "tree");
+    kids.forEach(function (k, i) {
+      if (visible.indexOf(k) === -1) return;
+      ul.appendChild(nodeItem(k, depth, labelFor(depth, i, parentLabel), i, kids.length));
+    });
+    return ul;
+  }
+
+  function nodeItem(n, depth, label, index, total) {
+    var st = BY_ID[n.status] || BY_ID.upcoming;
+    var kids = childrenOf(n.id);
+    var li = make("li", "node depth-" + depth + (kids.length ? " has-kids" : ""));
+    var collapsed = !!state.collapsed[n.id] && !filtering();
+
+    var row = make("div", "row");
+
+    var tw = make("button", "twist" + (kids.length ? "" : " ghost"), collapsed ? "▶" : "▼");
+    if (kids.length) {
+      tw.setAttribute("aria-expanded", collapsed ? "false" : "true");
+      tw.setAttribute("aria-label", (collapsed ? "Expand" : "Collapse") + " " + n.title);
+      tw.addEventListener("click", function () { state.collapsed[n.id] = !state.collapsed[n.id]; remember(); render(); });
+    } else {
+      tw.tabIndex = -1;
+    }
+    row.appendChild(tw);
+
+    var num = make("span", "num", label);
+    num.style.color = "var(" + st.color + ")";
+    row.appendChild(num);
+
+    var main = make("div", "row-main");
+    var title = make("div", "row-title", n.title);
+    title.style.color = "var(" + st.color + ")";
+    title.title = "Click to rename";
+    title.addEventListener("click", function () { if (state.canWrite) startInline("rename", n.id); });
+    main.appendChild(title);
+    if (n.note) main.appendChild(make("p", "row-note", n.note));
+
+    var meta = make("div", "row-meta");
+    if (n.date) meta.appendChild(make("span", "", st.dateLabel + " " + fmtDate(n.date)));
+    if (n.attempt && Number(n.attempt) > 1) meta.appendChild(make("span", "", "Attempt " + n.attempt));
+    if (kids.length) {
+      var d = descendants(n.id);
+      var done = d.filter(function (x) { return x.status === "completed"; }).length;
+      meta.appendChild(make("span", "", done + "/" + d.length + " sub-lines done"));
+    }
+    if (meta.children.length) main.appendChild(meta);
+    row.appendChild(main);
+
+    var side = make("div", "row-side");
+    var sel = make("select", "status-select");
+    sel.style.color = "var(" + st.color + ")";
+    sel.setAttribute("aria-label", "Status of " + n.title);
+    STATUSES.forEach(function (s) {
+      var o = document.createElement("option");
+      o.value = s.id; o.textContent = s.label;
+      if (s.id === n.status) o.selected = true;
+      sel.appendChild(o);
+    });
+    sel.disabled = !state.canWrite;
+    sel.addEventListener("change", function () { setStatus(n, sel.value); });
+    side.appendChild(sel);
+
+    if (state.canWrite) {
+      var quick = make("div", "row-side quick");
+      quick.appendChild(iconBtn("＋", "Add sub-line", function () { expand(n.id); startInline("child", n.id); }, depth >= MAX_DEPTH));
+      quick.appendChild(iconBtn("⋯", "More", function (ev) { openMenu(ev.currentTarget, n, index, total, depth); }));
+      side.appendChild(quick);
+    }
+    row.appendChild(side);
+    li.appendChild(row);
+
+    if (!collapsed) {
+      var sub = subtree(n, depth + 1, label.replace(/\.$/, ""));
+      if (sub) li.appendChild(sub);
+      if (state.inline && state.inline.kind === "child" && state.inline.id === n.id) {
+        li.appendChild(inlineRow(n.id, depth + 1, "…"));
+      }
+    }
+    return li;
+  }
+
+  function iconBtn(glyph, label, run, disabled) {
+    var b = make("button", "icon-btn", glyph);
+    b.title = label;
+    b.setAttribute("aria-label", label);
+    b.disabled = !!disabled;
+    if (!disabled) b.addEventListener("click", run);
+    return b;
+  }
+
+  /* ---------- inline add / rename ---------- */
+
+  function expand(id) { if (state.collapsed[id]) { state.collapsed[id] = false; remember(); } }
+
+  function startInline(kind, id) {
+    if (!state.canWrite) return;
+    closeMenu();
+    state.inline = { kind: kind, id: id };
+    state.draft = kind === "rename" ? (nodeById(id) || {}).title || "" : "";
+    render();
+  }
+
+  function stopInline() { state.inline = null; state.draft = ""; render(); }
+
+  function inlineRow(parentId, depth, label) {
+    var wrap = make("div", "inline-wrap");
+    wrap.style.paddingLeft = (10 + Math.min(depth, MAX_DEPTH) * 14) + "px";
+    wrap.appendChild(make("span", "inline-num", label));
+    var input = document.createElement("input");
+    input.className = "inline-input";
+    input.type = "text";
+    input.placeholder = "Describe the work, then press Enter";
+    input.value = state.draft;
+    input.setAttribute("data-inline", "1");
+    input.addEventListener("input", function () { state.draft = input.value; });
+    input.addEventListener("keydown", function (ev) {
+      if (ev.key === "Enter") { ev.preventDefault(); commitInlineAdd(parentId); }
+      else if (ev.key === "Escape") { ev.preventDefault(); stopInline(); }
+    });
+    wrap.appendChild(input);
+    wrap.appendChild(make("span", "inline-hint", "Enter to add · Esc to close"));
+    return wrap;
+  }
+
+  function commitInlineAdd(parentId) {
+    var title = (state.draft || "").trim();
+    if (!title) { stopInline(); return; }
+    var parent = nodeById(parentId);
+    var kids = childrenOf(parentId);
+    var now = new Date().toISOString();
+    state.draft = "";
+    var input = document.querySelector("[data-inline]");
+    if (input) input.value = "";
+    state.db.collection("nodes").add({
+      projectId: parent ? parent.projectId : project().id,
+      parentId: parentId,
+      title: title,
+      status: "upcoming",
+      note: "", date: "", attempt: null,
+      pos: nextPos(kids),
+      createdAt: now, updatedAt: now
+    }).catch(flashError);
+  }
+
+  function renameRow(id) {
+    var n = nodeById(id);
+    var wrap = make("div", "inline-wrap");
+    var input = document.createElement("input");
+    input.className = "inline-input";
+    input.type = "text";
+    input.value = state.draft;
+    input.setAttribute("data-inline", "1");
+    input.addEventListener("input", function () { state.draft = input.value; });
+    input.addEventListener("keydown", function (ev) {
+      if (ev.key === "Enter") {
+        ev.preventDefault();
+        var t = (state.draft || "").trim();
+        if (t && n && t !== n.title) {
+          state.db.collection("nodes").doc(id).update({ title: t, updatedAt: new Date().toISOString() }).catch(flashError);
+        }
+        stopInline();
+      } else if (ev.key === "Escape") { ev.preventDefault(); stopInline(); }
+    });
+    input.addEventListener("blur", function () { setTimeout(function () { if (state.inline && state.inline.kind === "rename") stopInline(); }, 120); });
+    wrap.appendChild(input);
+    wrap.appendChild(make("span", "inline-hint", "Enter to save"));
+    return wrap;
+  }
+
+  function restoreInline() {
+    if (!state.inline) return;
+    if (state.inline.kind === "rename") {
+      var target = document.querySelector('[data-rename="' + state.inline.id + '"]');
+      if (target) {
+        var box = renameRow(state.inline.id);
+        target.innerHTML = "";
+        target.appendChild(box);
+      }
+    }
+    var input = document.querySelector("[data-inline]");
+    if (input) {
+      input.focus();
+      var v = input.value;
+      input.value = "";
+      input.value = v;
+    }
+  }
+
+  /* ---------- menu ---------- */
+
+  function closeMenu() { el.menu.hidden = true; el.menu.innerHTML = ""; }
+
+  document.addEventListener("click", function (ev) {
+    if (el.menu.hidden) return;
+    if (el.menu.contains(ev.target)) return;
+    closeMenu();
+  }, true);
+
+  document.addEventListener("keydown", function (ev) {
+    if (ev.key === "Escape") { closeMenu(); if (!el.overlay.hidden) closePanel(); }
+  });
+
+  function menuItem(label, key, run, disabled, danger) {
+    var b = make("button", danger ? "danger" : "");
+    b.appendChild(make("span", "", label));
+    if (key) b.appendChild(make("span", "key", key));
+    b.disabled = !!disabled;
+    if (!disabled) b.addEventListener("click", function () { closeMenu(); run(); });
+    return b;
+  }
+
+  function openMenu(anchor, n, index, total, depth) {
+    el.menu.innerHTML = "";
+    var isObjective = depth === 0;
+
+    el.menu.appendChild(menuItem("Add sub-line", "＋", function () { expand(n.id); startInline("child", n.id); }, depth >= MAX_DEPTH));
+    el.menu.appendChild(menuItem("Add line below", "", function () { addSibling(n); }));
+    el.menu.appendChild(menuItem("Rename", "", function () { startInline("rename", n.id); }));
+    el.menu.appendChild(menuItem("Details, notes, date", "", function () {
+      isObjective ? openObjectiveForm(n) : openNodeForm(n);
+    }));
+    el.menu.appendChild(document.createElement("hr"));
+    el.menu.appendChild(menuItem("Move up", "▲", function () { move(n, -1); }, index === 0));
+    el.menu.appendChild(menuItem("Move down", "▼", function () { move(n, 1); }, index === total - 1));
+    if (!isObjective) {
+      el.menu.appendChild(menuItem("Indent under line above", "⇥", function () { indent(n); }, index === 0 || depth >= MAX_DEPTH));
+      el.menu.appendChild(menuItem("Outdent one level", "⇤", function () { outdent(n); }, depth <= 1));
+    }
+    el.menu.appendChild(document.createElement("hr"));
+    var what = isObjective ? "objective" : "line";
+    el.menu.appendChild(menuItem(childrenOf(n.id).length ? "Delete " + what + " and everything under it" : "Delete " + what, "", function () {
+      removeNode(n.id).catch(flashError);
+    }, false, true));
+
+    el.menu.hidden = false;
+    var r = anchor.getBoundingClientRect();
+    var mw = el.menu.offsetWidth, mh = el.menu.offsetHeight;
+    var left = Math.min(r.right - mw, window.innerWidth - mw - 8);
+    var top = r.bottom + 4;
+    if (top + mh > window.innerHeight - 8) top = Math.max(8, r.top - mh - 4);
+    el.menu.style.left = Math.max(8, left) + window.scrollX + "px";
+    el.menu.style.top = top + window.scrollY + "px";
+  }
+
+  /* ---------- structure writes ---------- */
+
+  function setStatus(n, status) {
+    if (!state.db || status === n.status) return;
+    state.db.collection("nodes").doc(n.id).update({ status: status, updatedAt: new Date().toISOString() }).catch(flashError);
+  }
+
+  function move(n, dir) {
+    var list = siblingsOf(n), i = -1;
+    list.forEach(function (x, k) { if (x.id === n.id) i = k; });
+    var j = i + dir;
+    if (i < 0 || j < 0 || j >= list.length) return Promise.resolve();
+    var a = list[i], b = list[j];
+    var pa = typeof a.pos === "number" ? a.pos : i + 1;
+    var pb = typeof b.pos === "number" ? b.pos : j + 1;
+    if (pa === pb) { pa = i + 1; pb = j + 1; }
+    return state.db.collection("nodes").doc(a.id).update({ pos: pb })
+      .then(function () { return state.db.collection("nodes").doc(b.id).update({ pos: pa }); })
+      .catch(flashError);
+  }
+
+  function addSibling(n) {
+    var list = siblingsOf(n), i = -1;
+    list.forEach(function (x, k) { if (x.id === n.id) i = k; });
+    var mine = typeof n.pos === "number" ? n.pos : i + 1;
+    var next = list[i + 1];
+    var nextPosV = next && typeof next.pos === "number" ? next.pos : mine + 1;
+    var now = new Date().toISOString();
+    var isObjective = !n.parentId;
+    if (isObjective) { openObjectiveForm(null); return; }
+    state.db.collection("nodes").add({
+      projectId: n.projectId, parentId: n.parentId, title: "New line", status: "upcoming",
+      note: "", date: "", attempt: null, pos: (mine + nextPosV) / 2, createdAt: now, updatedAt: now
+    }).then(function (ref) { startInline("rename", ref.id); }).catch(flashError);
+  }
+
+  function indent(n) {
+    var list = siblingsOf(n), i = -1;
+    list.forEach(function (x, k) { if (x.id === n.id) i = k; });
+    if (i <= 0) return;
+    var newParent = list[i - 1];
+    expand(newParent.id);
+    return state.db.collection("nodes").doc(n.id).update({
+      parentId: newParent.id, pos: nextPos(childrenOf(newParent.id)), updatedAt: new Date().toISOString()
+    }).catch(flashError);
+  }
+
+  function outdent(n) {
+    var parent = nodeById(n.parentId);
+    if (!parent || !parent.parentId) return;
+    var pPos = typeof parent.pos === "number" ? parent.pos : 1;
+    return state.db.collection("nodes").doc(n.id).update({
+      parentId: parent.parentId, pos: pPos + 0.5, updatedAt: new Date().toISOString()
+    }).catch(flashError);
+  }
+
+  function removeNode(id) {
+    var kids = descendants(id);
+    var chain = Promise.resolve();
+    kids.reverse().forEach(function (k) {
+      chain = chain.then(function () { return state.db.collection("nodes").doc(k.id).delete(); });
+    });
+    return chain.then(function () { return state.db.collection("nodes").doc(id).delete(); });
+  }
+
+  function deleteProject(id) {
+    var kids = projectNodes(id);
+    var chain = Promise.resolve();
+    kids.forEach(function (k) { chain = chain.then(function () { return state.db.collection("nodes").doc(k.id).delete(); }); });
+    return chain.then(function () { return state.db.collection("projects").doc(id).delete(); })
+      .then(function () { state.projectId = null; remember(); });
+  }
+
+  function flashError(err) {
+    var code = err && err.code ? err.code : "";
+    el.footSaved.textContent = code === "invalid_argument"
+      ? "That change wasn’t saved — this view can’t write to the plan."
+      : "That change wasn’t saved. Try once more.";
+    setTimeout(function () { el.footSaved.textContent = "Saved as you go."; }, 5000);
+  }
+
+  /* ---------- modal forms ---------- */
+
+  function closePanel() { el.overlay.hidden = true; el.panel.innerHTML = ""; }
+  el.overlay.addEventListener("click", function (e) { if (e.target === el.overlay) closePanel(); });
+
+  function field(labelText, control) {
+    var f = make("div", "field");
+    var id = "f" + Math.random().toString(36).slice(2, 8);
+    var l = make("label", "", labelText);
+    l.setAttribute("for", id);
+    control.id = id;
+    f.appendChild(l); f.appendChild(control);
+    return f;
+  }
+
+  function panelShell(titleText, hintText) {
+    el.panel.innerHTML = "";
+    var h = make("h2", "", titleText); h.id = "panelTitle";
+    el.panel.appendChild(h);
+    if (hintText) el.panel.appendChild(make("p", "panel-hint", hintText));
+    var err = make("p", "form-error"); err.hidden = true;
+    el.panel.appendChild(err);
+    return err;
+  }
+
+  function finishPanel(err, saveLabel, onSave) {
+    var actions = make("div", "panel-actions");
+    var cancel = make("button", "btn", "Cancel");
+    cancel.addEventListener("click", closePanel);
+    var save = make("button", "btn btn-primary", saveLabel);
+    save.addEventListener("click", function () {
+      var p = onSave(function (m) { err.hidden = false; err.textContent = m; });
+      if (!p) return;
+      save.disabled = true; save.textContent = "Saving…";
+      p.then(closePanel).catch(function (e) {
+        save.disabled = false; save.textContent = saveLabel;
+        err.hidden = false; err.textContent = "That didn’t save. Try again.";
+        flashError(e);
+      });
+    });
+    actions.appendChild(cancel); actions.appendChild(save);
+    el.panel.appendChild(actions);
+    el.overlay.hidden = false;
+  }
+
+  function openProjectForm(p) {
+    if (!state.canWrite) return;
+    var editing = p && p.id;
+    var err = panelShell(editing ? "Edit project" : "New project", "The funded piece of work. Each project keeps its own objectives and numbering.");
+
+    var title = document.createElement("input");
+    title.type = "text";
+    title.placeholder = "DST Odisha — Role of BAP1 co-mutation in FGFR2 fusion cholangiocarcinoma cells";
+    title.value = editing ? p.title : "";
+    el.panel.appendChild(field("Project", title));
+
+    var note = document.createElement("textarea");
+    note.placeholder = "Funder, duration, collaborators";
+    note.value = editing ? (p.note || "") : "";
+    el.panel.appendChild(field("Subtitle (optional)", note));
+
+    if (editing) {
+      var row = make("div", "add-line");
+      row.style.padding = "4px 0 0";
+      row.appendChild(deleteButton("Delete this project", "Delete it and everything under it?", function () {
+        return deleteProject(p.id).then(closePanel);
+      }));
+      el.panel.appendChild(row);
+    }
+
+    finishPanel(err, editing ? "Save project" : "Add project", function (fail) {
+      var t = title.value.trim();
+      if (!t) { fail("Give the project a title first."); title.focus(); return null; }
+      var payload = { title: t, note: note.value.trim(), updatedAt: new Date().toISOString() };
+      if (editing) return state.db.collection("projects").doc(p.id).update(payload);
+      payload.pos = nextPos(state.projects || []);
+      payload.createdAt = new Date().toISOString();
+      return state.db.collection("projects").add(payload).then(function (ref) { state.projectId = ref.id; remember(); });
+    });
+    title.focus();
+  }
+
+  function deleteButton(label, confirmLabel, run) {
+    var b = make("button", "btn-quiet danger", label);
+    var armed = false, timer = null;
+    b.addEventListener("click", function () {
+      if (!armed) { armed = true; b.textContent = confirmLabel; timer = setTimeout(function () { armed = false; b.textContent = label; }, 4000); return; }
+      clearTimeout(timer);
+      b.disabled = true; b.textContent = "Deleting…";
+      run().catch(function (e) { b.disabled = false; armed = false; b.textContent = label; flashError(e); });
+    });
+    return b;
+  }
+
+  function openObjectiveForm(o) {
+    if (!state.canWrite) return;
+    var p = project();
+    if (!p) { openProjectForm(null); return; }
+    var editing = o && o.id;
+    var err = panelShell(editing ? "Edit objective" : "New objective", "Objectives are numbered in order; everything under them renumbers itself.");
+
+    var title = document.createElement("input");
+    title.type = "text";
+    title.placeholder = "To establish the in vitro cell culture model of CCA cells expressing FGFR2 fusion…";
+    title.value = editing ? o.title : "";
+    el.panel.appendChild(field("Objective", title));
+
+    var note = document.createElement("textarea");
+    note.placeholder = "Rationale, expected outcome";
+    note.value = editing ? (o.note || "") : "";
+    el.panel.appendChild(field("Notes (optional)", note));
+
+    finishPanel(err, editing ? "Save objective" : "Add objective", function (fail) {
+      var t = title.value.trim();
+      if (!t) { fail("Give the objective a title first."); title.focus(); return null; }
+      var payload = { title: t, note: note.value.trim(), updatedAt: new Date().toISOString() };
+      if (editing) return state.db.collection("nodes").doc(o.id).update(payload);
+      var now = new Date().toISOString();
+      payload.projectId = p.id; payload.parentId = null; payload.status = "upcoming";
+      payload.date = ""; payload.attempt = null;
+      payload.pos = nextPos(childrenOf(null, p.id));
+      payload.createdAt = now;
+      return state.db.collection("nodes").add(payload);
+    });
+    title.focus();
+  }
+
+  function openNodeForm(n) {
+    if (!state.canWrite) return;
+    var err = panelShell("Line details", "Status, date and notes for this line. Sub-lines keep their own.");
+
+    var title = document.createElement("input");
+    title.type = "text";
+    title.value = n.title;
+    el.panel.appendChild(field("Work to be done", title));
+
+    var statusSel = document.createElement("select");
+    STATUSES.forEach(function (s) {
+      var o = document.createElement("option");
+      o.value = s.id; o.textContent = s.label;
+      statusSel.appendChild(o);
+    });
+    statusSel.value = n.status || "upcoming";
+
+    var date = document.createElement("input");
+    date.type = "date"; date.value = n.date || "";
+
+    var row = make("div", "field-row");
+    var sf = field("Status", statusSel), df = field("Date", date);
+    row.appendChild(sf); row.appendChild(df);
+    el.panel.appendChild(row);
+
+    var attempt = document.createElement("input");
+    attempt.type = "number"; attempt.min = "1"; attempt.step = "1"; attempt.placeholder = "2";
+    attempt.value = n.attempt || "";
+    var af = field("Attempt number", attempt);
+    el.panel.appendChild(af);
+
+    var note = document.createElement("textarea");
+    note.value = n.note || "";
+    var nf = field("Notes", note);
+    el.panel.appendChild(nf);
+
+    function sync() {
+      var s = BY_ID[statusSel.value] || BY_ID.upcoming;
+      df.querySelector("label").textContent = s.dateLabel;
+      nf.querySelector("label").textContent = s.noteLabel;
+      note.placeholder =
+        s.id === "failed" ? "No band at the expected size; backbone probably not fully linearised" :
+        s.id === "repeat" ? "Dropping annealing to 58 °C and using fresh dNTPs" :
+        s.id === "upcoming" ? "Waiting on the primer order" :
+        s.id === "completed" ? "Sequencing confirmed the junction" :
+        "Transformation plated, counting colonies tomorrow";
+      af.hidden = s.id !== "repeat" && s.id !== "failed";
+    }
+    statusSel.addEventListener("change", sync);
+    sync();
+
+    finishPanel(err, "Save line", function (fail) {
+      var t = title.value.trim();
+      if (!t) { fail("Describe the work first."); title.focus(); return null; }
+      return state.db.collection("nodes").doc(n.id).update({
+        title: t, status: statusSel.value, date: date.value || "",
+        attempt: attempt.value ? Number(attempt.value) : null,
+        note: note.value.trim(), updatedAt: new Date().toISOString()
+      });
+    });
+    title.focus();
+  }
+
+  function parseOutline(text) {
+    var out = [];
+    String(text).split(/\r?\n/).forEach(function (raw) {
+      if (!raw.trim()) return;
+      var indentLen = (raw.match(/^[ \t]*/) || [""])[0].replace(/\t/g, "    ").length;
+      var line = raw.trim();
+      var romanMark = /^(i{1,3}|iv|v|vi{0,3}|ix|x)[.)]\s+/i.test(line);
+      var letterMark = /^[a-h][.)]\s+/i.test(line);
+      var bullet = /^[-*•]\s+/.test(line);
+      var numMark = /^\d+(\.\d+)*[.)]?\s+/.test(line);
+      var clean = line
+        .replace(/^\d+(\.\d+)*[.)]?\s+/, "")
+        .replace(/^(i{1,3}|iv|v|vi{0,3}|ix|x)[.)]\s+/i, "")
+        .replace(/^[a-z][.)]\s+/i, "")
+        .replace(/^[-*•]\s+/, "")
+        .trim();
+      if (!clean) return;
+      var level = 0;
+      if (numMark) level = 0;
+      else if (letterMark || bullet) level = 1;
+      else if (romanMark) level = 2;
+      else level = indentLen >= 2 ? 1 : 0;
+      if (indentLen >= 8) level = Math.max(level, 2);
+      out.push({ title: clean, level: level });
+    });
+    return out;
+  }
+
+  function openBulkForm(parentId) {
+    if (!state.canWrite) return;
+    var err = panelShell("Paste a numbered list",
+      "One line each. Lines starting a. b. c. (or a dash) nest one level in; i. ii. iii. nest two. Indentation works too. Existing numbers are stripped — the plan renumbers everything itself.");
+
+    var ta = document.createElement("textarea");
+    ta.style.minHeight = "230px";
+    ta.placeholder = "1.1 Transfection of sgBAP1 into MMNK-1 cells followed by T7 assay\n  a. Transfection of sgBAP1 and pX459 empty vector\n  b. Selected cells DNA isolation\n     i. Quantify on the nanodrop\n1.2 Mutation frequency check using TIDE analysis";
+    el.panel.appendChild(field("Work to be done", ta));
+
+    var statusSel = document.createElement("select");
+    STATUSES.forEach(function (s) {
+      var o = document.createElement("option");
+      o.value = s.id; o.textContent = s.label;
+      statusSel.appendChild(o);
+    });
+    statusSel.value = "upcoming";
+    el.panel.appendChild(field("Status for everything pasted", statusSel));
+
+    var preview = make("p", "panel-hint", "");
+    el.panel.appendChild(preview);
+    ta.addEventListener("input", function () {
+      var p = parseOutline(ta.value);
+      preview.textContent = p.length ? "Reads as " + p.length + " lines, deepest level " + (Math.max.apply(null, p.map(function (x) { return x.level; })) + 1) + "." : "";
+    });
+
+    finishPanel(err, "Add to plan", function (fail) {
+      var parsed = parseOutline(ta.value);
+      if (!parsed.length) { fail("Paste at least one line."); ta.focus(); return null; }
+      var root = nodeById(parentId);
+      var now = new Date().toISOString();
+      var stack = [parentId];
+      var counters = {};
+      var chain = Promise.resolve();
+      parsed.forEach(function (item) {
+        chain = chain.then(function () {
+          var lvl = Math.min(item.level, stack.length - 1, MAX_DEPTH - 1);
+          var parent = stack[lvl];
+          counters[parent] = (counters[parent] || 0) + 1;
+          return state.db.collection("nodes").add({
+            projectId: root ? root.projectId : project().id,
+            parentId: parent,
+            title: item.title,
+            status: statusSel.value,
+            note: "", date: "", attempt: null,
+            pos: (lvl === 0 ? nextPos(childrenOf(parentId)) : 0) + counters[parent],
+            createdAt: now, updatedAt: now
+          }).then(function (ref) {
+            stack = stack.slice(0, lvl + 1);
+            stack.push(ref.id);
+          });
+        });
+      });
+      return chain;
+    });
+    ta.focus();
+  }
+
+  /* ---------- export ---------- */
+
+  function csvCell(v) { return '"' + String(v == null ? "" : v).replace(/"/g, '""') + '"'; }
+
+  function exportCsv() {
+    if (!state.downloads) return;
+    var p = project();
+    if (!p) return;
+    var rows = [["Project","Number","Level","Line","Status","Date","Attempt","Notes"].map(csvCell).join(",")];
+    function walk(parentId, depth, parentLabel) {
+      childrenOf(parentId, p.id).forEach(function (n, i) {
+        var label = depth === 0 ? "Objective " + (i + 1) : labelFor(depth, i, parentLabel);
+        rows.push([p.title, label, depth + 1, n.title, (BY_ID[n.status] || {}).label || n.status, n.date || "", n.attempt || "", n.note || ""].map(csvCell).join(","));
+        walk(n.id, depth + 1, depth === 0 ? String(i + 1) : label.replace(/\.$/, ""));
+      });
+    }
+    walk(null, 0, "");
+    var stamp = new Date().toISOString().slice(0, 10);
+    state.downloads.save({ filename: "work-plan-" + stamp + ".csv", data: rows.join("\r\n") }).catch(function () {});
+  }
+
+  /* ---------- wiring ---------- */
+
+  el.search.addEventListener("input", function () { state.query = el.search.value; render(); });
+  el.addObjective.addEventListener("click", function () { openObjectiveForm(null); });
+  el.editProject.addEventListener("click", function () { openProjectForm(project()); });
+  el.exportBtn.addEventListener("click", exportCsv);
+  el.collapseAll.addEventListener("click", function () {
+    (state.nodes || []).forEach(function (n) { if (childrenOf(n.id).length) state.collapsed[n.id] = true; });
+    remember(); render();
+  });
+  el.expandAll.addEventListener("click", function () { state.collapsed = {}; remember(); render(); });
+
+  /* ---------- storage ---------- */
+
+  var KEY = "workplan.v1";
+
+  function uid() { return "n" + Date.now().toString(36) + Math.random().toString(36).slice(2, 7); }
+
+  function persist() {
+    try {
+      localStorage.setItem(KEY, JSON.stringify({ projects: state.projects || [], nodes: state.nodes || [] }));
+      el.footSaved.textContent = "Saved in this browser.";
+    } catch (e) {
+      el.footSaved.textContent = "Couldn’t save — browser storage is blocked or full. Back up before you close the tab.";
+    }
+  }
+
+  function keyFor(name) { return name === "projects" ? "projects" : "nodes"; }
+
+  var localDb = {
+    collection: function (name) {
+      var key = keyFor(name);
+      return {
+        add: function (data) {
+          var id = uid();
+          state[key] = (state[key] || []).concat([Object.assign({ id: id }, data)]);
+          persist(); render();
+          return Promise.resolve({ id: id });
+        },
+        doc: function (id) {
+          return {
+            update: function (patch) {
+              state[key] = (state[key] || []).map(function (x) {
+                return x.id === id ? Object.assign({}, x, patch) : x;
+              });
+              persist(); render();
+              return Promise.resolve();
+            },
+            delete: function () {
+              state[key] = (state[key] || []).filter(function (x) { return x.id !== id; });
+              persist(); render();
+              return Promise.resolve();
+            }
+          };
+        }
+      };
+    }
+  };
+
+  function load() {
+    var raw = null;
+    try { raw = localStorage.getItem(KEY); } catch (e) {}
+    if (raw) {
+      try {
+        var d = JSON.parse(raw);
+        state.projects = Array.isArray(d.projects) ? d.projects : [];
+        state.nodes = Array.isArray(d.nodes) ? d.nodes : [];
+        return;
+      } catch (e) {}
+    }
+    if (window.STARTER_PLAN && Array.isArray(window.STARTER_PLAN.projects)) {
+      state.projects = window.STARTER_PLAN.projects.slice();
+      state.nodes = (window.STARTER_PLAN.nodes || []).slice();
+      persist();
+      return;
+    }
+    state.projects = [];
+    state.nodes = [];
+  }
+
+  function saveFile(filename, text, mime) {
+    try {
+      return saveFileUnsafe(filename, text, mime);
+    } catch (e) {
+      el.footSaved.textContent = "This browser wouldn’t start the download.";
+      return Promise.resolve();
+    }
+  }
+
+  function saveFileUnsafe(filename, text, mime) {
+    var blob = new Blob([text], { type: mime || "text/plain;charset=utf-8" });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 2000);
+    return Promise.resolve();
+  }
+
+  function stamp() { return new Date().toISOString().slice(0, 10); }
+
+  el.exportJson.addEventListener("click", function () {
+    saveFile("work-plan-backup-" + stamp() + ".json",
+      JSON.stringify({ version: 1, savedAt: new Date().toISOString(), projects: state.projects, nodes: state.nodes }, null, 2),
+      "application/json");
+  });
+
+  var importArmed = false, importTimer = null;
+  el.importBtn.addEventListener("click", function () {
+    var hasData = (state.nodes || []).length || (state.projects || []).length;
+    if (hasData && !importArmed) {
+      importArmed = true;
+      el.importBtn.textContent = "Replace everything?";
+      importTimer = setTimeout(function () { importArmed = false; el.importBtn.textContent = "Restore"; }, 5000);
+      return;
+    }
+    clearTimeout(importTimer);
+    importArmed = false;
+    el.importBtn.textContent = "Restore";
+    el.importFile.click();
+  });
+
+  el.importFile.addEventListener("change", function () {
+    var file = el.importFile.files && el.importFile.files[0];
+    if (!file) return;
+    var reader = new FileReader();
+    reader.onload = function () {
+      try {
+        var d = JSON.parse(String(reader.result));
+        if (!Array.isArray(d.projects) || !Array.isArray(d.nodes)) throw new Error("shape");
+        state.projects = d.projects;
+        state.nodes = d.nodes;
+        state.projectId = null;
+        persist(); render();
+        el.footSaved.textContent = "Restored from " + file.name + ".";
+      } catch (e) {
+        el.footSaved.textContent = "That file isn’t a work-plan backup.";
+      }
+      el.importFile.value = "";
+    };
+    reader.onerror = function () {
+      el.footSaved.textContent = "Couldn’t read that file.";
+      el.importFile.value = "";
+    };
+    reader.readAsText(file);
+  });
+
+  state.db = localDb;
+  state.downloads = { save: function (o) { return saveFile(o.filename, o.data, "text/csv;charset=utf-8"); } };
+  load();
+  render();
+
+  if ("serviceWorker" in navigator && location.protocol.indexOf("http") === 0) {
+    window.addEventListener("load", function () {
+      navigator.serviceWorker.register("./sw.js").catch(function () {});
+    });
+  }
+})();
+</script>
+</body>
+</html>
